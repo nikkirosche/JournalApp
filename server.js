@@ -53,31 +53,46 @@ const newUser = (req, res) => {
             res.status(404).send(err);
             return;
         }
-        //no user with that email
-        // if (result.rows.length === 0) {
-        //     res.status(404).send('Login failed');
-        //     return;
-        // }
-        // //get user record from results
-        // const user = result.rows[0];
-        // const shaObj = new jsSHA('SHA-512', 'TEXT', { encoding: 'UTF8'});
-        // //input password from the request to the SHA object
-        // shaObj.update(req.body.password);
-        // //get hashedPassword
-        // const hashedPassword = shaObj.getHash('HEX');
-
-        //to tally the password in database with above hashed one
-        // if (user.password !== hashedPassword) {
-        //     res.status(404).send('Login failed');
-        //     return;
-        // }
-        //password hash matches and we authenticate user
-        //for cookie
-        // res.cookie('loggedIn', true);
-        //redirect to login page
         res.redirect('/login');
     })
 };
+
+//for login
+const authUser = (req, res) => {
+    const values = req.body.email;
+    pool.query(`SELECT * FROM users WHERE email = ${req.body.email}`, (err, result) =>{
+        if (err) {
+            console.log('err executing query');
+            res.status(404).send(result.rows);
+            return;
+        }
+        //did not find user with that email
+        if (result.rows.length === 0) {
+            res.status(404).send('Login failed');
+            return;
+        }
+        //get user record from results
+        const user = result.rows[0];
+        const shaObj = new jsSHA('SHA-512', 'TEXT', { encoding: 'UTF8'});
+        //input password from the request to the SHA object
+        shaObj.update(req.body.password);
+        //get hashedPassword
+        const hashedPassword = shaObj.getHash('HEX');
+
+        // to tally the password in database with above hashed one
+        if (user.password !== hashedPassword) {
+            res.status(404).send('Login failed');
+            return;
+        }
+        // password hashmatches and we authenticate user
+        // for cookie
+        res.cookie('loggedIn', true);
+        // redirect to home page
+        res.redirect('/home');
+    })
+}
+
+
 
 //===============================================CALENDAR SECTION===========================================================//
 
@@ -93,7 +108,8 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
-// app.post("/login", (req, res) => {});
+//for login POST request
+app.post("/login", authUser);
 
 //connect to register page
 app.get("/register", (req, res) => {
