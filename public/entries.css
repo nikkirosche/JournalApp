@@ -1,0 +1,33 @@
+/* logo CSS */
+body {
+    background-image: url("images/background-main.png");
+    background-size: cover;
+    padding-top: 120px;
+}
+
+.login-icon {
+    width: 15px;
+    height: 15px;
+    margin-right: 3px;
+}
+
+.logo {
+    width: 50px;
+    height: 50px;
+    margin: 10px;
+}
+
+/* form CSS */
+#entry-container {
+    width: 100%;
+}
+
+.journal-entry-form {
+    background-color: #FFE69A;
+    text-align: center;
+    margin: auto;
+    padding: 10px;
+    width: 50%;
+}
+
+

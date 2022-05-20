@@ -1,0 +1,44 @@
+<%- include ('partials/header-initial.ejs') %>
+
+<!--register form-->
+<div class="register-container">
+
+    <div class="row register-form">
+        <div class="col-xs-12 col-sm-8 col-md-6 col-sm-offset-2 col-md-offset-3">
+            <form role="form" action="/register" method="POST">
+                <h2 class="sign-up-prompt">Register today <small>, It's free!</small></h2>
+                <hr class="colorgraph">
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <input type="text" name="first_name" id="first_name" class="form-control input-lg" placeholder="First Name" tabindex="1">
+                        </div>
+                    </div>
+                    <div class="col-xs-12 col-sm-6 col-md-6">
+                        <div class="form-group">
+                            <input type="text" name="last_name" id="last_name" class="form-control input-lg" placeholder="Last Name" tabindex="2">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <input type="text" name="display_name" id="display_name" class="form-control input-lg" placeholder="Display Name" tabindex="3">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="email" id="email" class="form-control input-lg" placeholder="Email" tabindex="4">
+                </div>
+                <div class="form-group">
+                        <div class="form-group">
+                            <input type="text" name="password" id="password" class="form-control input-lg" placeholder="Password" tabindex="5">
+                        </div>
+                </div>
+                <hr class="colorgraph">
+                <div class="row button-row">
+                    <div class="col-xs-12 col-md-6"><input type="submit" value="Register" class="btn register-button btn-warning btn-block btn-lg" tabindex="7"></div>
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+<%- include ('partials/footer.ejs') %>

@@ -1,0 +1,49 @@
+/* body CSS */
+
+.intro-section {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+/* image CSS */
+
+.app-image {
+    width: 100px;
+    height: 100px;
+    display: block;
+    margin: 0 auto;
+    margin-bottom: 20px;
+}
+
+.login-icon {
+    width: 15px;
+    height: 15px;
+    margin-right: 3px;
+}
+
+/* middle section CSS */
+.point-image {
+    width:100px;
+    height: 100px;
+    margin-bottom: 10px;
+}
+
+#middle-section {
+    position: fixed;
+    bottom: 0;
+    background-color: white;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    text-align: center;
+    padding-top: 20px;
+    line-height: 1.5rem;
+}
+
+
