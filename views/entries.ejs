@@ -3,57 +3,44 @@
 <div id="entry-container">
     <div class="journal-entry-form">
         <form action="/entries" class="journal-entry" method="POST">
-            <div class="row">
-                <div class="col-lg-6">
+            <div class="row mt-3">
+                <div class="col-lg-4">
                     <label for="mood">How do you feel today?</label>
-                    <textarea rows="5" column="60" id="mood" name="mood"></textarea><br>
+                    <textarea rows="5" column="60" class="mt-4" id="mood" name="mood" value="<%=  %>"></textarea><br>
                 </div>
-                <div class="col-lg-6">
+                <div class="col-lg-4">
                     <label for="accomplishment">What did you accomplish today?</label>
                     <textarea rows="5" column="60" id="accomplishment" name="accomplishment"></textarea><br>
                 </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <label for="meal">What were your meals today?</label><br>
-
-                        <label for="breakfast">Breakfast:</label>
-                        <input type="text" id="breakfast" name="breakfast" /><br>
-
-                        <label for="lunch">Lunch:</label>
-                        <input type="text" id="lunch" name="lunch" /><br>
-
-                        <label for="dinner">Dinner:</label>
-                        <input type="text" id="dinner" name="dinner" /><br>
-
-                        <label for="snack">Snack:</label>
-                        <input type="text" id="snack" name="snack" />
+                <div class="col-lg-4">
+                    <label for="meal">What were your meals today?</label><br>
+                    <textarea rows="5" column="60" class="mt-4" id="meal" name="meal"></textarea><br>
+                </div>
+            </div>
+                <div class="row mt-5">
+                    <div class="col-lg-4">
+                        <label for="event">Did any notable events happen today?</label>
+                        <textarea rows="5" column="60" class="mt-4" id="event" name="event"></textarea><br>
                     </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <label for="workout">Did you perform any physical activity today?</label><br>
-                        <input type="checkbox" id="workout_yes" name="workout_yes">
+                        <input type="checkbox" id="workout_yes" name="workout_done" value="Yes">
                         <label for="workout_yes">Yes</label>
-                        <input type="checkbox" id="workout_no" name="workout_no">
+                        <input type="checkbox" id="workout_no" name="workout_done" value="No">
                         <label for="workout_no">No</label><br>
-                        <label for="description">Further notes:</label><br>
+                        <label for="workout">Further notes:</label><br>
                         <textarea rows="5" column="60" id="workout" name="workout"></textarea><br>
                     </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-6">
-                        <label for="event">Did any notable events happen today?</label>
-                        <textarea rows="5" column="60" id="event" name="event"></textarea><br>
-                    </div>
-                    <div class="col-lg-6">
+                    <div class="col-lg-4">
                         <label for="spending">How much did you spend today?</label>
-                        <textarea rows="5" column="60" id="spending" name="spending"></textarea><br>
+                        <textarea rows="5" column="60" class="mt-4" id="spending" name="spending"></textarea><br>
                     </div>
                 </div>
-                <div class="col text-center">
+                <div class="col text-center mt-5">
                     <input type="submit" class="btn btn-warning" value="Submit">
                 </div>
         </form>
     </div>
-</div>
 </div>
 
 <%- include ('partials/footer.ejs') %>

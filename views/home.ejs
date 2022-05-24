@@ -1,282 +1,273 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Journal App</title>
 
-    <!--Connect to Fonts-->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400&family=Raleway:ital,wght@1,100;1,300&display=swap"
-      rel="stylesheet"
-    />
-    <!--Connect to Bootstrap CSS-->
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
-      integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-      crossorigin="anonymous"
-    />
-    <!--Connect to CSS-->
-    <link rel="stylesheet" href="home.css" />
-    <!-- <link rel="stylesheet" href="entries.css"> -->
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Journal App</title>
 
-  <body class="light">
-    <!--title section-->
-    <div id="title">
-      <!--for the initial navbar-->
-      <div class="container-fluid fixed-top">
-        <nav class="navbar navbar-expand-lg navbar-light">
-          <button
-            class="navbar-toggler"
-            type="button"
-            data-bs-toggle="collapse"
-            data-bs-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <!--div for your navbar items-->
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <!--for the brand name-->
-            <a class="navbar-brand" href=""
-              ><img
-                class="logo"
-                src="images/moon.png"
-                alt="logo-image"
-              />Journal</a
-            >
-            <!--margin auto means it would fill up as much space in between the lines. ms means margin start-->
-            <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
-                <a class="nav-link mx-2" aria-current="page" href="/home"
-                  >Home</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link mx-2" aria-current="page" href="/entries"
-                  >New Entry</a
-                >
-              </li>
-              <li class="nav-item">
-                <a class="nav-link ml-2" href="/intro"
-                  ><img
-                    class="login-icon"
-                    src="images/unlock.png"
-                    alt="login-icon"
-                  />Logout</a
-                >
-              </li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-    </div>
+  <!--Connect to Fonts-->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;400&family=Raleway:ital,wght@1,100;1,300&display=swap"
+    rel="stylesheet" />
+  <!--Connect to Bootstrap CSS-->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+    integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  <!--Connect to CSS-->
+  <link rel="stylesheet" href="home.css" />
+  <!-- <link rel="stylesheet" href="entries.css"> -->
+</head>
 
-    <div class="home-page-container">
-      <div class="row">
-        <!--Calendar-->
-        <div class="calendar col-lg-6">
-          <div class="calendar-header">
-            <span class="month-picker" id="month-picker">February</span>
-            <div class="year-picker">
-              <span class="year-change" id="prev-year">
-                <pre></pre>
-              </span>
-              <span id="year">2021</span>
-              <span class="year-change" id="next-year">
-                <pre></pre>
-              </span>
-            </div>
-          </div>
-          <div class="calendar-body">
-            <div class="calendar-week-day">
-              <div>Sun</div>
-              <div>Mon</div>
-              <div>Tue</div>
-              <div>Wed</div>
-              <div>Thu</div>
-              <div>Fri</div>
-              <div>Sat</div>
-            </div>
-            <div class="calendar-days"></div>
-          </div>
-          <div class="calendar-footer">
-            <div class="toggle">
-              <span>Light Mode</span>
-              <div class="light-mode-switch">
-                <div class="light-mode-switch-ident"></div>
-              </div>
-            </div>
-          </div>
-          <div class="month-list"></div>
+<body class="light">
+  <!--title section-->
+  <div id="title">
+    <!--for the initial navbar-->
+    <div class="container-fluid fixed-top">
+      <nav class="navbar navbar-expand-lg navbar-light">
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <!--div for your navbar items-->
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <!--for the brand name-->
+          <a class="navbar-brand" href=""><img class="logo" src="images/moon.png" alt="logo-image" />Journal</a>
+          <!--margin auto means it would fill up as much space in between the lines. ms means margin start-->
+          <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+              <a class="nav-link mx-2" aria-current="page" href="/home">Home</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link mx-2" aria-current="page" href="/entries">New Entry</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link ml-2" href="/intro"><img class="login-icon" src="images/unlock.png"
+                  alt="login-icon" />Logout</a>
+            </li>
+          </ul>
         </div>
-        <script>
-          let calendar = document.querySelector(".calendar");
-
-          const month_names = [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December",
-          ];
-
-          isLeapYear = (year) => {
-            return (
-              (year % 4 === 0 && year % 100 !== 0 && year % 400 !== 0) ||
-              (year % 100 === 0 && year % 400 === 0)
-            );
-          };
-
-          getFebDays = (year) => {
-            return isLeapYear(year) ? 29 : 28;
-          };
-
-          generateCalendar = (month, year) => {
-            let calendar_days = calendar.querySelector(".calendar-days");
-            let calendar_header_year = calendar.querySelector("#year");
-
-            let days_of_month = [
-              31,
-              getFebDays(year),
-              31,
-              30,
-              31,
-              30,
-              31,
-              31,
-              30,
-              31,
-              30,
-              31,
-            ];
-
-            calendar_days.innerHTML = "";
-
-            let currDate = new Date();
-            if (!month == null) month = currDate.getMonth();
-            if (!year) year = currDate.getFullYear();
-
-            let curr_month = `${month_names[month]}`;
-            month_picker.innerHTML = curr_month;
-            calendar_header_year.innerHTML = year;
-
-            // get first day of month
-
-            let first_day = new Date(year, month, 1);
-
-            for (
-              let i = 0;
-              i <= days_of_month[month] + first_day.getDay() - 1;
-              i++
-            ) {
-              let day = document.createElement("div");
-              if (i >= first_day.getDay()) {
-                day.classList.add("calendar-day-hover");
-                day.innerHTML = i - first_day.getDay() + 1;
-                day.innerHTML += `<span></span>
-                                <span></span>
-                                <span></span>
-                                <span></span>`;
-                if (
-                  i - first_day.getDay() + 1 === currDate.getDate() &&
-                  year === currDate.getFullYear() &&
-                  month === currDate.getMonth()
-                ) {
-                  day.classList.add("curr-date");
-                }
-              }
-              calendar_days.appendChild(day);
-            }
-          };
-
-          let month_list = calendar.querySelector(".month-list");
-
-          month_names.forEach((e, index) => {
-            let month = document.createElement("div");
-            month.innerHTML = `<div data-month="${index}">${e}</div>`;
-            month.querySelector("div").onclick = () => {
-              month_list.classList.remove("show");
-              curr_month.value = index;
-              generateCalendar(index, curr_year.value);
-            };
-            month_list.appendChild(month);
-          });
-
-          let month_picker = calendar.querySelector("#month-picker");
-
-          month_picker.onclick = () => {
-            month_list.classList.add("show");
-          };
-
-          let currDate = new Date();
-
-          let curr_month = {
-            value: currDate.getMonth(),
-          };
-          let curr_year = {
-            value: currDate.getFullYear(),
-          };
-
-          generateCalendar(curr_month.value, curr_year.value);
-
-          document.querySelector("#prev-year").onclick = () => {
-            --curr_year.value;
-            generateCalendar(curr_month.value, curr_year.value);
-          };
-
-          document.querySelector("#next-year").onclick = () => {
-            ++curr_year.value;
-            generateCalendar(curr_month.value, curr_year.value);
-          };
-
-          let light_mode_toggle = document.querySelector(".light-mode-switch");
-
-          light_mode_toggle.onclick = () => {
-            document.querySelector("body").classList.toggle("dark");
-            document.querySelector("body").classList.toggle("light");
-          };
-        </script>
-
-      <!--Journal past entries-->
-      <div class="col-lg-6">
-        <div class="row journal-row">
-          <div class="col-lg-4">I am entry 1</div>
-          <div class="col-lg-4">I am entry 2</div>
-          <div class="col-lg-4">I am entry 3</div>
-        </div>
+      </nav>
     </div>
   </div>
 
-    <!--Connect to Bootstrap & jQuery-->
-    <script
-      src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-      integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
-      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-      crossorigin="anonymous"
-    ></script>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
-      integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+  <div class="home-page-container">
+    <div class="row">
+      <!--Calendar-->
+      <div class="calendar col-lg-12">
+        <div class="calendar-header">
+          <span class="month-picker" id="month-picker">February</span>
+          <div class="year-picker">
+            <span class="year-change" id="prev-year">
+              <pre></pre>
+            </span>
+            <span id="year">2021</span>
+            <span class="year-change" id="next-year">
+              <pre></pre>
+            </span>
+          </div>
+        </div>
+        <div class="calendar-body">
+          <div class="calendar-week-day">
+            <div>Sun</div>
+            <div>Mon</div>
+            <div>Tue</div>
+            <div>Wed</div>
+            <div>Thu</div>
+            <div>Fri</div>
+            <div>Sat</div>
+          </div>
+          <div class="calendar-days"></div>
+        </div>
+        <div class="calendar-footer">
+          <div class="toggle">
+            <span>Light Mode</span>
+            <div class="light-mode-switch">
+              <div class="light-mode-switch-ident"></div>
+            </div>
+          </div>
+        </div>
+        <div class="month-list"></div>
+      </div>
+      <script>
+        let calendar = document.querySelector(".calendar");
+
+        const month_names = [
+          "January",
+          "February",
+          "March",
+          "April",
+          "May",
+          "June",
+          "July",
+          "August",
+          "September",
+          "October",
+          "November",
+          "December",
+        ];
+
+        isLeapYear = (year) => {
+          return (
+            (year % 4 === 0 && year % 100 !== 0 && year % 400 !== 0) ||
+            (year % 100 === 0 && year % 400 === 0)
+          );
+        };
+
+        getFebDays = (year) => {
+          return isLeapYear(year) ? 29 : 28;
+        };
+
+        generateCalendar = (month, year) => {
+          let calendar_days = calendar.querySelector(".calendar-days");
+          let calendar_header_year = calendar.querySelector("#year");
+
+          let days_of_month = [
+            31,
+            getFebDays(year),
+            31,
+            30,
+            31,
+            30,
+            31,
+            31,
+            30,
+            31,
+            30,
+            31,
+          ];
+
+          calendar_days.innerHTML = "";
+
+          let currDate = new Date();
+          if (!month == null) month = currDate.getMonth();
+          if (!year) year = currDate.getFullYear();
+
+          let curr_month = `${month_names[month]}`;
+          month_picker.innerHTML = curr_month;
+          calendar_header_year.innerHTML = year;
+
+          // get first day of month
+
+          let first_day = new Date(year, month, 1);
+
+          for (
+            let i = 0; i <= days_of_month[month] + first_day.getDay() - 1; i++
+          ) {
+            let day = document.createElement("div");
+            if (i >= first_day.getDay()) {
+              day.classList.add("calendar-day-hover");
+              day.innerHTML = i - first_day.getDay() + 1;
+              day.innerHTML += `<span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>`;
+              if (
+                i - first_day.getDay() + 1 === currDate.getDate() &&
+                year === currDate.getFullYear() &&
+                month === currDate.getMonth()
+              ) {
+                day.classList.add("curr-date");
+              }
+            }
+            calendar_days.appendChild(day);
+          }
+        };
+
+        let month_list = calendar.querySelector(".month-list");
+
+        month_names.forEach((e, index) => {
+          let month = document.createElement("div");
+          month.innerHTML = `<div data-month="${index}">${e}</div>`;
+          month.querySelector("div").onclick = () => {
+            month_list.classList.remove("show");
+            curr_month.value = index;
+            generateCalendar(index, curr_year.value);
+          };
+          month_list.appendChild(month);
+        });
+
+        let month_picker = calendar.querySelector("#month-picker");
+
+        month_picker.onclick = () => {
+          month_list.classList.add("show");
+        };
+
+        let currDate = new Date();
+
+        let curr_month = {
+          value: currDate.getMonth(),
+        };
+        let curr_year = {
+          value: currDate.getFullYear(),
+        };
+
+        generateCalendar(curr_month.value, curr_year.value);
+
+        document.querySelector("#prev-year").onclick = () => {
+          --curr_year.value;
+          generateCalendar(curr_month.value, curr_year.value);
+        };
+
+        document.querySelector("#next-year").onclick = () => {
+          ++curr_year.value;
+          generateCalendar(curr_month.value, curr_year.value);
+        };
+
+        let light_mode_toggle = document.querySelector(".light-mode-switch");
+
+        light_mode_toggle.onclick = () => {
+          document.querySelector("body").classList.toggle("dark");
+          document.querySelector("body").classList.toggle("light");
+        };
+      </script>
+    </div>
+
+
+    <!--Journal past entries-->
+    <div class="journal-row col-lg-6" method="POST" action="/home">
+      <div class="row">
+        <div class="col-lg-6 entries-container-main">
+          <div class="date-container ml-2 mr-2">
+            <h2><%= entryDate.day %>   <%= entryDate.month %>   <%= entryDate.year %></h2>
+          </div>
+          <ol>
+            <li>How do you feel today? <br><strong><%= answerData.mood %></strong></li>
+            <li>What did you accomplish today? <br><strong><%= answerData.accomplishment %></strong></li>
+            <li>What were your meals today? <br><strong><%= answerData.meal %></strong></li>
+            <li>Did any notable events happen today? <br><strong><%= answerData.event %></strong></li>
+            <li>Did you perform any physical activity today? <br><strong><%= answerData.workout_done %></strong></li>
+            <ul>
+              <li>Further notes? <br><strong><%= answerData.workout %></strong></li>
+            </ul>
+            <li>How much did you spend today? <br><strong><%= answerData.spending %></strong></li>
+          </ol>
+          <div class="entry-button-div">
+            <button type="button" class="btn btn-secondary btn-lg ml-3 mr-4" data-bs-toggle="button" autocomplete="off"><a href="/edit"></a>Edit</button>
+            <button type="button" class="btn btn-danger btn-lg" data-bs-toggle="button" autocomplete="off">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class=journal-title>
+    <img class="entry-title" src="images/ENTRIES.gif" alt="journal-gif">
+  </div>
+  </div>
+
+  <!--Connect to Bootstrap & jQuery-->
+  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+    integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+    integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+    integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous">
+  </script>
+</body>
+
 </html>

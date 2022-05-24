@@ -1,13 +1,6 @@
-          <div class="row journal-row">
-         <% entries.forEach((element, i) => { %>
-            <div class="col-lg-4 col-md-6">
-                  <h1>Journal <%= i += 1 %></h1> 
-                  <h4>How do you feel today?</h4><%= element.mood %>
-                  <h4>What did you accomplish today?</h4> <%= element.accomplishment %> 
-                  <h4>Meal:</h4> <%= element.meal %>
-                  <h4>Workout: <%= element.workout %></h4>
-                  <h4>Did any notable events happen today? <%= element.event %></h4>
-                  <h4>How much did you spend today?</h4> <%= element.spending %>
-                </div>
-                  <% }); %> 
-        </div>
+1) Make a page to alert email in use already. Redirect to fresh page [Problem: All the nicole rosche still being logged in sql data table]
+
+2) Make sure user does not make more than one entry a day 
+
+3) What happens when user has not made an entry
+4) When edit redirect and have an update query
