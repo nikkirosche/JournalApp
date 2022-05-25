@@ -3,7 +3,13 @@ body {
     background-image: url("images/background-main.png");
     background-size: cover;
     padding-top: 120px;
+    font-family: Montserrat;
 }
+
+a.disabled {
+    pointer-events: none;
+    cursor: default;
+  }
 
 .login-icon {
     width: 15px;

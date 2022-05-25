@@ -1,7 +1,46 @@
 <%- include ('partials/header-final.ejs') %>
 
-<div class="form-edit-container d-flex align-items-center justify-content-center">
-    Hello, I am where the entry will go 
+<div id="entry-container">
+  <div class="journal-entry-form">
+      <form action="/edit/<%= answerData.id %>" class="journal-entry" method="POST">
+          <div class="row mt-3">
+              <div class="col-lg-4">
+                  <label for="mood">How do you feel today?</label>
+                  <textarea rows="5" column="60" class="mt-4" id="mood" name="mood"><%= answerData.mood %></textarea><br>
+              </div>
+              <div class="col-lg-4">
+                  <label for="accomplishment">What did you accomplish today?</label>
+                  <textarea rows="5" column="60" id="accomplishment" name="accomplishment"><%= answerData.accomplishment %></textarea><br>
+              </div>
+              <div class="col-lg-4">
+                  <label for="meal">What were your meals today?</label><br>
+                  <textarea rows="5" column="60" class="mt-4" id="meal" name="meal"><%= answerData.meal %></textarea><br>
+              </div>
+          </div>
+              <div class="row mt-5">
+                  <div class="col-lg-4">
+                      <label for="event">Did any notable events happen today?</label>
+                      <textarea rows="5" column="60" class="mt-4" id="event" name="event"><%= answerData.event %></textarea><br>
+                  </div>
+                  <div class="col-lg-4">
+                      <label for="workout">Did you perform any physical activity today?</label><br>
+                      <input type="checkbox" id="workout_yes" name="workout_done" value="Yes" <% if(workoutData.workout_done === true){ %> checked <% } %> >
+                      <label for="workout_yes">Yes</label>
+                      <input type="checkbox" id="workout_no" name="workout_done" value="No" <% if(workoutData.workout_done === false){ %> checked <% } %> >
+                      <label for="workout_no">No</label><br>
+                      <label for="workout">Further notes:</label><br>
+                      <textarea rows="5" column="60" id="workout" name="workout"><%= workoutData.workout %></textarea><br>
+                  </div>
+                  <div class="col-lg-4">
+                      <label for="spending">How much did you spend today?</label>
+                      <textarea rows="5" column="60" class="mt-4" id="spending" name="spending"><%= answerData.spending %></textarea><br>
+                  </div>
+              </div>
+              <div class="col text-center mt-5">
+                  <input type="submit" class="btn btn-warning" value="Submit">
+              </div>
+      </form>
+  </div>
 </div>
 
 <%- include ('partials/footer.ejs') %>

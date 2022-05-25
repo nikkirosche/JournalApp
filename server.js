@@ -68,6 +68,7 @@ const getDate = () => {
 };
 
 //===============================================LOGIN & COOKIE BACKEND=========================================================//
+//==============================================================================================================================//
 
 //for new user
 const newUser = (req, res) => {
@@ -100,7 +101,7 @@ const newUser = (req, res) => {
         res.redirect("/alert");
         return;
       } else {
-        console.log("Registration Success!")
+        console.log("Registration Success!");
       }
     }
   );
@@ -114,7 +115,7 @@ const newUser = (req, res) => {
         console.log("Error detected", err);
         res.status(404).send(err);
         return;
-      } 
+      }
     }
   );
 };
@@ -163,6 +164,7 @@ const authUser = (req, res) => {
 };
 
 //===============================================JOURNAL ENTRY SECTION===========================================================//
+//==============================================================================================================================//
 
 //create new log (entries page posted on home page)
 const newJournalLog = async (req, res) => {
@@ -201,8 +203,28 @@ const newJournalLog = async (req, res) => {
   });
 };
 
+//display the first journal entry for the day
+const singleEntry = (req, res) => {
+  const entryDate = getDate();
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  pool.query(
+    `SELECT * FROM answer WHERE user_id = ${req.cookies.user_id} AND date >= '${
+      today.getMonth() + 1
+    }.${today.getDate()}.${today.getFullYear()} 00:00:00'`,
+    (err, result) => {
+      if (err) {
+        console.log("Error Date", err);
+        return;
+      }
+      console.log(result.rows);
+      res.render("home", { answerData: result.rows[0], entryDate });
+    }
+  );
+};
+
 //display single journal entry
-const displaySingleEntry = async (req, res) => {
+const displayEntry = async (req, res) => {
   try {
     const { id } = req.params;
     const getData = await pool.query(`SELECT * FROM answer WHERE id=$1`, [id]);
@@ -230,36 +252,95 @@ const displaySingleEntry = async (req, res) => {
   }
 };
 
-//==============================================JOURNAL EDIT AND DELETE SECTION================================================//
+//==============================================EDIT JOURNAL SECTION============================================================//
+//==============================================================================================================================//
+
 //edit journal entry
 const editEntry = async (req, res) => {
+  console.log("Helloo");
   try {
-    const { id } = req.params;
-    const answerData = await pool.query(`SELECT FROM answer WHERE id=$1`, [id]);
-    const workoutData = await pool.query(`SELECT * FROM workout WHERE answer_id=$1`, [id]);
-    console.log(answerData);
-    console.log(workoutData);
+    const entryDate = getDate();
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    const result = await pool.query(
+      `SELECT * FROM answer WHERE user_id = ${
+        req.cookies.user_id
+      } AND date >= '${
+        today.getMonth() + 1
+      }.${today.getDate()}.${today.getFullYear()} 00:00:00'`
+    );
+    const answerData = result.rows[0];
+    const workoutResult = await pool.query(
+      `SELECT * FROM workout WHERE answer_id=${answerData.id}`
+    );
+    const workoutData = workoutResult.rows[0];
+    console.log("results:", result);
+    console.log("answer data:", answerData);
 
-    //loop through all the answers
-    let journalData = answerData.rows.map((entry) => entry.answer_id);
-
-    //render data to edit page
-    res.render("editEntry", {
-      answer: answerData.rows,
-      workout: workoutData.rows,
+    res.render("edit", {
+      answerData,
+      entryDate,
+      workoutData,
     });
   } catch (err) {
     console.log("Error Editing", err);
     res.status(404).send("Edit request failed");
     return;
   }
-}
+};
 
+//update edited journal
 const updateJournal = async (req, res) => {
-  
-}
+  try {
+    const { id } = req.params;
+    const getanswer = await pool.query(`SELECT * FROM answer WHERE id=$1`, [id]);
+    const answerData = getanswer.rows[0];
+    const getworkout = await pool.query(`SELECT * FROM workout WHERE id=$1`, [id]);
+    const workoutData = getworkout.rows[0];
+    const {
+      mood,
+      accomplishment,
+      event,
+      spending,
+      meal,
+      workout_done,
+      workout,
+    } = req.body;
+    const updateAnswer = `UPDATE answer SET mood ='${mood}', accomplishment='${accomplishment}', event='${event}', spending='${spending}', meal='${meal}' WHERE id=${id}`;
+    const updateWorkout = `UPDATE workout SET workout_done='${workout_done}', description='${workout}' WHERE answer_id=${id}`;
 
-//===============================================CONNECT TO EJS FILE========================================================//
+    await pool.query(updateAnswer);
+    await pool.query(updateWorkout);
+    
+    
+    res.redirect("home");
+
+  } catch (err) {
+    console.log("Error Updating", err);
+  }
+};
+
+//===============================================DELETE JOURNAL ENTRY===========================================================//
+//==============================================================================================================================//
+
+const deleteJournal = async (req, res) => {
+  try {
+    const { id } = req.params;
+    await pool.query(`DELETE FROM answer WHERE id=$1`, [id]);
+    await pool.query(`DELETE FROM workout WHERE answer_id=$1`, [id]);
+
+    const entryDate = getDate();
+    res.redirect("/home", { answerData: req.body, entryDate });
+  } catch (err) {
+    console.log("Journal not deleted", err);
+    res.status(404).send("Journal failed to delete");
+    return;
+  }
+};
+
+//===============================================CONNECT TO EJS FILE============================================================//
+//==============================================================================================================================//
+
 //connect to intro page
 app.get("/intro", (req, res) => {
   res.render("intro");
@@ -282,46 +363,51 @@ app.get("/register", (req, res) => {
 app.post("/register", newUser);
 
 //connect to home page
-app.get("/home", (req, res) => {
+app.get("/home", singleEntry);
+
+//to post the submitted journal entry
+app.post("/home", displayEntry);
+
+//to delete journal entry
+app.delete("/home", deleteJournal);
+
+app.post("/entries", newJournalLog);
+
+//connect to entry log page
+app.get("/entries", (req, res) => {
   const entryDate = getDate();
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   pool.query(
-    `SELECT * FROM answer WHERE user_id = ${req.cookies.user_id} AND date >= '${today.getMonth()+1}.${today.getDate()}.${today.getFullYear()} 00:00:00'`,
+    `SELECT * FROM answer WHERE user_id = ${req.cookies.user_id} AND date >= '${
+      today.getMonth() + 1
+    }.${today.getDate()}.${today.getFullYear()} 00:00:00'`,
     (err, result) => {
       if (err) {
         console.log("Error Date", err);
         return;
       }
       console.log(result.rows);
-      res.render("home", { answerData: result.rows[0], entryDate });
-
+      res.render("entries", { answerData: result.rows[0], entryDate });
     }
   );
-
-});
-
-//to post the submitted journal entry
-app.post("/home", displaySingleEntry);
-
-app.post("/entries", newJournalLog);
-
-//connect to entry log page
-app.get("/entries", (req, res) => {
-  res.render("entries");
 });
 
 //to edit journal
-app.get("/edit", (req, res) => {
-  res.render("edit");
-});
+app.get("/edit", editEntry);
 
 //to update the edited note
-// app.put("/edit", updateNote);
+app.post("/edit/:id", updateJournal);
 
-//connect to alert page 
+//connect to alert page
 app.get("/alert", (req, res) => {
   res.render("alert");
+});
+
+//to clear the cookie
+app.get("/logout", (req, res) => {
+  res.clearCookie("user_id");
+  res.redirect("/intro");
 });
 
 //===============================================LISTEN TO PORT=======================================//

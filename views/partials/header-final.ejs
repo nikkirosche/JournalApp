@@ -57,7 +57,8 @@
                 <a class="nav-link mx-2" aria-current="page" href="/home">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link mx-2" aria-current="page" href="/entries">New Entry</a>
+                <% console.log(answerData) %>
+                <a  aria-current="page" href="/entries" <% if(answerData) { %> class= "disabled nav-link mx-2" <% } else {%> class = "nav-link mx-2" <%}%>>New Entry</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link ml-2" href="/intro"><img class="login-icon" src="images/unlock.png" alt="login-icon">Logout</a>

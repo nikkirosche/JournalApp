@@ -339,6 +339,11 @@ body {
   justify-content: space-around;
 }
 
+a.disabled {
+  pointer-events: none;
+  cursor: default;
+}
+
 .journal-row {
   position: relative;
   margin-top: 50px;
@@ -356,6 +361,7 @@ body {
 
 .entry-button-div {
   justify-content: space-between;
+  display: inline;
 }
 
 .entry-title {
