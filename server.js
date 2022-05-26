@@ -2,6 +2,7 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import jsSHA from "jssha";
 import pg from "pg";
+import axios from "axios";
 import bodyParser from "body-parser";
 //to connect to CSS
 import path from "path";
@@ -9,6 +10,7 @@ import moment from "moment";
 const __dirname = path.resolve();
 
 const app = express();
+
 var urlencodedParser = bodyParser.urlencoded({
   extended: false,
 });
@@ -101,10 +103,21 @@ const newUser = (req, res) => {
         res.redirect("/alert");
         return;
       } else {
-        console.log("Registration Success!");
-      }
+        return pool.query(
+          `INSERT INTO users (first_name, last_name, display_name, email, password) VALUES ($1, $2, $3, $4, $5)`,
+          values)
+          .then ((result) => {
+            console.log("Registration Success!");
+            res.redirect("/login")
+          }) 
+          .catch ((err) => {
+            console.log(err);
+          })
+      };
     }
-  );
+  )
+
+
 
   //make query to DB
   pool.query(
@@ -116,6 +129,7 @@ const newUser = (req, res) => {
         res.status(404).send(err);
         return;
       }
+      res.redirect("/login")
     }
   );
 };
@@ -159,7 +173,7 @@ const authUser = (req, res) => {
     //save user id in cookie
     res.cookie("user_id", user.id);
     // redirect to home page
-    res.render("home", { answerData: {}, entryDate });
+    res.redirect("home")
   });
 };
 
@@ -204,52 +218,80 @@ const newJournalLog = async (req, res) => {
 };
 
 //display the first journal entry for the day
-const singleEntry = (req, res) => {
-  const entryDate = getDate();
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  pool.query(
-    `SELECT * FROM answer WHERE user_id = ${req.cookies.user_id} AND date >= '${
-      today.getMonth() + 1
-    }.${today.getDate()}.${today.getFullYear()} 00:00:00'`,
-    (err, result) => {
-      if (err) {
-        console.log("Error Date", err);
-        return;
-      }
-      console.log(result.rows);
-      res.render("home", { answerData: result.rows[0], entryDate });
-    }
-  );
-};
+// const singleEntry = (req, res) => {
+//   const entryDate = getDate();
+//   const today = new Date();
+//   today.setHours(0, 0, 0, 0);
+//   pool.query(
+//     `SELECT * FROM answer WHERE user_id = ${req.cookies.user_id} AND date >= '${
+//       today.getMonth() + 1
+//     }.${today.getDate()}.${today.getFullYear()} 00:00:00'`,
+//     (err, result) => {
+//       if (err) {
+//         console.log("Error Date", err);
+//         return;
+//       }
+//       console.log(result.rows);
+//       res.render("home", {
+//         answerData: result.rows[0],
+//         entryDate,
+//       });
+//     }
+//   );
+// };
 
 //display single journal entry
 const displayEntry = async (req, res) => {
+  console.log('start of display entry function')
+  const entryDate = getDate();
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  console.log('querying for today\'s entry');
   try {
-    const { id } = req.params;
-    const getData = await pool.query(`SELECT * FROM answer WHERE id=$1`, [id]);
-    console.log(getData);
-    //get workoutData that has the answer_id inside to link to answer table
-    const getWorkoutData = await pool.query(
-      `SELECT FROM answer.id, answer.user_id, answer.mood, answer.accomplishment, answer.event, answer.spending, answer.meal, answer.date, workout.id, workout.workout_done, workout.description, workout.answer_id FROM answer INNER JOIN workout ON answer.id = workout.answer_id WHERE answer_id=${id};`
+
+    const result = await pool.query(
+      `SELECT * FROM answer WHERE user_id = ${req.cookies.user_id} AND date >= '${
+        today.getMonth() + 1
+      }.${today.getDate()}.${today.getFullYear()} 00:00:00'`
     );
-    console.log(getWorkoutData);
-    if (getData.rows.length === 1) {
-      res.render("home", {
-        answerData: req.body,
+    
+    if (result.rows.length === 0) {
+      const ejsObj = {
+        answerData: undefined,
+        workoutData: undefined,
         entryDate,
-        answer: getData.rows,
-        workout: getWorkoutData.rows,
-      });
-    } else {
-      console.log("Error", err);
-      res.status(404).send("Sorry, entry not being displayed!");
+      }
+      res.render('home', ejsObj);
     }
-  } catch (err) {
-    console.log("Error", err);
-    res.status(404).send("Sorry, entry not being displayed");
-    return;
-  }
+    const answerData = result.rows[0];
+    const id = answerData.id;
+  
+    //get workout table data that has the answer_id inside to link to answer table
+    const getWorkout = await pool.query(`SELECT * FROM workout WHERE answer_id=$1`, [id]);
+    console.log('this is getWorkout: ', getWorkout.rows)
+
+    console.log('this is answerData: ', answerData)
+    
+    const ejsObj = {
+      answerData: answerData,
+      workoutData: getWorkout.rows[0],
+      entryDate,
+    }
+    res.render('home', ejsObj);
+
+  } catch (error) {console.log("Error for querying last entry: ", error)}
+      
+
+
+    // const getWorkoutData = await pool.query(
+    //   `SELECT FROM answer.id, answer.user_id, answer.mood, answer.accomplishment, answer.event, answer.spending, answer.meal, answer.date, 
+    //   workout.id, workout.workout_done, workout.description,workout.answer_id 
+    //    FROM answer 
+    //    INNER JOIN workout 
+    //    ON answer.id = workout.answer_id 
+    //    WHERE answer_id=${id};`
+    // );
+  
 };
 
 //==============================================EDIT JOURNAL SECTION============================================================//
@@ -293,10 +335,16 @@ const editEntry = async (req, res) => {
 const updateJournal = async (req, res) => {
   try {
     const { id } = req.params;
-    const getanswer = await pool.query(`SELECT * FROM answer WHERE id=$1`, [id]);
+    const getanswer = await pool.query(`SELECT * FROM answer WHERE id=$1`, [
+      id,
+    ]);
     const answerData = getanswer.rows[0];
-    const getworkout = await pool.query(`SELECT * FROM workout WHERE id=$1`, [id]);
+    console.log(answerData);
+    const getworkout = await pool.query(
+      `SELECT * FROM workout WHERE answer_id=${id}`
+    );
     const workoutData = getworkout.rows[0];
+    console.log(workoutData);
     const {
       mood,
       accomplishment,
@@ -311,10 +359,8 @@ const updateJournal = async (req, res) => {
 
     await pool.query(updateAnswer);
     await pool.query(updateWorkout);
-    
-    
-    res.redirect("home");
 
+    res.redirect("/home");
   } catch (err) {
     console.log("Error Updating", err);
   }
@@ -326,14 +372,17 @@ const updateJournal = async (req, res) => {
 const deleteJournal = async (req, res) => {
   try {
     const { id } = req.params;
-    await pool.query(`DELETE FROM answer WHERE id=$1`, [id]);
-    await pool.query(`DELETE FROM workout WHERE answer_id=$1`, [id]);
+    await pool.query(`DELETE FROM answer WHERE answer_id='${id}'`);
+    await pool.query(`DELETE FROM workout WHERE answer_id='${id}'`);
+    console.log(req.params);
 
     const entryDate = getDate();
-    res.redirect("/home", { answerData: req.body, entryDate });
+    res.redirect("/home", {
+      answerData: req.body,
+      entryDate,
+    });
   } catch (err) {
     console.log("Journal not deleted", err);
-    res.status(404).send("Journal failed to delete");
     return;
   }
 };
@@ -363,13 +412,25 @@ app.get("/register", (req, res) => {
 app.post("/register", newUser);
 
 //connect to home page
-app.get("/home", singleEntry);
+// app.get("/home", singleEntry);
 
 //to post the submitted journal entry
-app.post("/home", displayEntry);
+app.get("/home", displayEntry);
 
 //to delete journal entry
-app.delete("/home", deleteJournal);
+// app.delete("/home/:id", (req, res) => {
+//   const id = req.params.id;
+//   answer.findByIdAndDelete(id)
+//   .then(result => {
+//     res.json({ redirect: '/home}'})
+//   })
+//   .catch (err) {
+//     console.log(err);
+//   }
+// })
+
+//to delete journal entry
+app.get("/home/:id", deleteJournal);
 
 app.post("/entries", newJournalLog);
 
@@ -388,7 +449,10 @@ app.get("/entries", (req, res) => {
         return;
       }
       console.log(result.rows);
-      res.render("entries", { answerData: result.rows[0], entryDate });
+      res.render("entries", {
+        answerData: result.rows[0],
+        entryDate,
+      });
     }
   );
 });

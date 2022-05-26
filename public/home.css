@@ -347,7 +347,6 @@ a.disabled {
 .journal-row {
   position: relative;
   margin-top: 50px;
-  top: 200px;
   width: max-content;
 }
 
@@ -357,15 +356,20 @@ a.disabled {
 
 .entries-container-main {
   justify-content: space-around;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.12), 0 1px 4px rgba(0, 0, 0, 0.24);
+  padding-bottom: 10px;
 }
 
 .entry-button-div {
-  justify-content: space-between;
-  display: inline;
+  justify-content: center;
+  text-align: center;
 }
 
-.entry-title {
-  position: relative;
-  bottom: 520px;
-  left: 750px;
+.entry-font {
+  font-weight: 600;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-style: italic;
 }
+
+
+
